@@ -2,6 +2,10 @@ interface Folder {
   id: number;
   title: string;
   parentId: number | null;
+  childFolderIds: number[];
+  childItemIds: number[];
+  isChecked: boolean;
+  isIndeterminate: boolean;
 }
 
 interface Item {
@@ -11,9 +15,12 @@ interface Item {
   isChecked: boolean;
 }
 
-interface SelectorData {
-  folders: Folder[];
-  items: Item[];
+interface FolderMap {
+  [index: number]: Folder;
 }
 
-export type { Folder, Item, SelectorData };
+interface ItemMap {
+  [index: number]: Item;
+}
+
+export type { Folder, Item, FolderMap, ItemMap };
