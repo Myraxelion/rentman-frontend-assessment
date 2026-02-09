@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { fetchItemSelectorData } from "../services/selectorService";
-import type { ItemMap, FolderMap } from "../types/selector.types";
-import ItemCheckbox from "./ItemCheckbox";
+import type { ItemMap, FolderMap, Folder } from "../types/selector.types";
+import FolderCheckbox from "./FolderCheckbox";
 
 export default function ItemSelector() {
   const [folderData, setFolderData] = useState<FolderMap>({});
   const [itemData, setItemData] = useState<ItemMap>({});
+  const topFolders: Folder[] = Object.values(folderData).filter(
+    (folder) => folder.parentId === null,
+  );
 
   useEffect(() => {
     fetchItemSelectorData().then((data) => {
@@ -22,21 +25,27 @@ export default function ItemSelector() {
     setItemData(newItemData);
   }
 
-  const itemCheckboxes = Object.values(itemData).map((item) => {
+  const folderCheckboxes = topFolders.map((folder) => {
     return (
-      <li key={"item" + item.id}>
-        <ItemCheckbox item={item} onCheckboxClick={handleItemClick} />
+      <li key={"folder" + folder.id}>
+        <FolderCheckbox
+          folder={folder}
+          folderMap={folderData}
+          itemMap={itemData}
+          onItemClick={handleItemClick}
+        />
       </li>
     );
   });
 
   console.log("itemData", itemData);
   console.log("folderData", folderData);
+  console.log("topFolders", topFolders);
 
   return (
     <>
       <h1>Hello World!</h1>
-      <ol>{itemCheckboxes}</ol>
+      <ol>{folderCheckboxes}</ol>
     </>
   );
 }
