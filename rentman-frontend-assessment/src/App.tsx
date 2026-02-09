@@ -1,9 +1,10 @@
 import "./App.css";
+import ItemSelector from "./components/ItemSelector";
 
 function App() {
   return (
     <>
-      <h1>Hello World!</h1>
+      <ItemSelector />
     </>
   );
 }
