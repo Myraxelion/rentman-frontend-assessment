@@ -38,13 +38,12 @@ export default function ItemSelector() {
     );
   });
 
-  console.log("itemData", itemData);
-  console.log("folderData", folderData);
-  console.log("topFolders", topFolders);
+  // console.log("itemData", itemData);
+  // console.log("folderData", folderData);
+  // console.log("topFolders", topFolders);
 
   return (
     <>
-      <h1>Hello World!</h1>
       <ol>{folderCheckboxes}</ol>
     </>
   );

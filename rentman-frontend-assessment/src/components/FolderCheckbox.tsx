@@ -20,11 +20,22 @@ export default function FolderCheckbox({
     }
   }, [folder]);
 
-  const childItems = Object.values(itemMap).filter(
-    (item) => item.folderId === folder.id,
-  );
+  const folderCheckboxes = folder.childFolderIds.map((folderId) => {
+    const folder = folderMap[folderId];
+    return (
+      <li key={"folder" + folder.id}>
+        <FolderCheckbox
+          folder={folder}
+          folderMap={folderMap}
+          itemMap={itemMap}
+          onItemClick={onItemClick}
+        />
+      </li>
+    );
+  });
 
-  const itemCheckboxes = childItems.map((item) => {
+  const itemCheckboxes = folder.childItemIds.map((itemId) => {
+    const item = itemMap[itemId];
     return (
       <li key={"item" + item.id}>
         <ItemCheckbox item={item} onCheckboxClick={onItemClick} />
@@ -43,6 +54,7 @@ export default function FolderCheckbox({
         />
         <label>{folder.title}</label>
       </span>
+      <ol>{folderCheckboxes}</ol>
       <ol>{itemCheckboxes}</ol>
     </>
   );
