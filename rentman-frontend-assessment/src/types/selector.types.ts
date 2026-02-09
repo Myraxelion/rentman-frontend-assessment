@@ -8,6 +8,7 @@ interface Item {
   id: number;
   title: string;
   folderId: number;
+  isChecked: boolean;
 }
 
 interface SelectorData {

@@ -23,6 +23,7 @@ function mapItemSelectorData(data: any): SelectorData {
       id: itemData[0],
       title: itemData[1],
       folderId: itemData[2],
+      isChecked: false,
     });
   });
 

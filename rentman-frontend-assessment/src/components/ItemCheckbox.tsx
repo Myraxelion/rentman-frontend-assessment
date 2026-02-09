@@ -1,21 +1,19 @@
 import type { Item } from "../types/selector.types";
 
-export default function Item({
+export default function ItemCheckbox({
   item,
-  isChecked,
   onCheckboxClick,
 }: {
   item: Item;
-  isChecked: boolean;
-  onCheckboxClick: () => void;
+  onCheckboxClick: (id: number) => void;
 }) {
   return (
     <>
       <span>
         <input
           type="checkbox"
-          checked={isChecked}
-          onClick={() => onCheckboxClick()}
+          checked={item.isChecked}
+          onClick={() => onCheckboxClick(item.id)}
         />
         <label>{item.title}</label>
       </span>
