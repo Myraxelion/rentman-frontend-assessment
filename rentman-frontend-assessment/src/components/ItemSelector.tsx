@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import {
-  fetchItemSelectorData,
-  type SelectorData,
-} from "../services/selectorService";
+import { fetchItemSelectorData } from "../services/selectorService";
+import type { SelectorData } from "../types/selector.types";
 
 export default function ItemSelector() {
   const [selectorData, setSelectorData] = useState<SelectorData>(
