@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import response from "../data/response.json";
 import type { Folder, Item, SelectorData } from "../types/selector.types";
 
