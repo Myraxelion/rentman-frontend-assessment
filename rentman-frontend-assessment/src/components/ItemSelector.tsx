@@ -172,10 +172,16 @@ export default function ItemSelector() {
   });
 
   return (
-    <>
-      <ol>{folderCheckboxes}</ol>
-      <p>Selected item ids: {Array.from(selectedItemIds).join(", ")}</p>
-      <button onClick={clearSelection}>Clear Selection</button>
-    </>
+    <div className="item-selector-container">
+      <div className="list-container">
+        <ol>{folderCheckboxes}</ol>
+      </div>
+      <p className="label">
+        Selected item ids: {Array.from(selectedItemIds).join(", ")}
+      </p>
+      <button className="selection-button" onClick={clearSelection}>
+        Clear Selection
+      </button>
+    </div>
   );
 }

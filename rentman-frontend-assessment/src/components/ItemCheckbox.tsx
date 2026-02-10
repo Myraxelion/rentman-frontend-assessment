@@ -9,13 +9,15 @@ export default function ItemCheckbox({
 }) {
   return (
     <>
-      <span>
-        <input
-          type="checkbox"
-          checked={item.isChecked}
-          onChange={() => onCheckboxClick(item.id)}
-        />
-        <label>{item.title}</label>
+      <span className="list-item-container">
+        <span>
+          <input
+            type="checkbox"
+            checked={item.isChecked}
+            onChange={() => onCheckboxClick(item.id)}
+          />
+          <label className="label">{item.title}</label>
+        </span>
       </span>
     </>
   );

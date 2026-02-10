@@ -52,15 +52,20 @@ export default function FolderCheckbox({
 
   return (
     <>
-      <span>
-        <input
-          type="checkbox"
-          checked={folder.isChecked}
-          ref={inputRef}
-          onChange={() => onFolderClick(folder.id)}
-        />
-        <label>{folder.title}</label>
-        <button onClick={() => setIsExpanded(!isExpanded)}>
+      <span className="list-item-container">
+        <span>
+          <input
+            type="checkbox"
+            checked={folder.isChecked}
+            ref={inputRef}
+            onChange={() => onFolderClick(folder.id)}
+          />
+          <label className="label">{folder.title}</label>
+        </span>
+        <button
+          className="clear-button"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
           {isExpanded ? UP_ARROW : DOWN_ARROW}
         </button>
       </span>

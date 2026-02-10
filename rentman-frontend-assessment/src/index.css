@@ -1,3 +1,55 @@
 ol {
   list-style-type: none;
+  padding-left: 16px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.list-container {
+  border-color: hsl(210, 0%, 89%);
+  border-width: 1px;
+  border-style: solid;
+}
+
+.label,
+button {
+  font-size: 14px;
+}
+
+input[type="checkbox"] {
+  accent-color: hsl(213, 97%, 53%);
+  margin-right: 8px;
+}
+
+.clear-button {
+  background-color: transparent;
+  border: none;
+  display: flex;
+}
+
+.selection-button {
+  background-color: hsl(213, 97%, 53%);
+  color: white;
+  border: none;
+  padding: 6px 12px 6px 12px;
+  border-radius: 3px;
+  align-self: flex-end;
+}
+
+.item-selector-container {
+  display: flex;
+  width: 275px;
+  flex-direction: column;
+}
+
+.list-item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.list-item-container:hover {
+  background-color: hsl(0, 0%, 96%);
 }
