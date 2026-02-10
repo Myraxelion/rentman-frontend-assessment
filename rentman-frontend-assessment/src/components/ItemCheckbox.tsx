@@ -13,7 +13,7 @@ export default function ItemCheckbox({
         <input
           type="checkbox"
           checked={item.isChecked}
-          onClick={() => onCheckboxClick(item.id)}
+          onChange={() => onCheckboxClick(item.id)}
         />
         <label>{item.title}</label>
       </span>

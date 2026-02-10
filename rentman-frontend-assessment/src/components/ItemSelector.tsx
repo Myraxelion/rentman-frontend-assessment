@@ -42,6 +42,23 @@ export default function ItemSelector() {
     setSelectedItemIds(newSelectedItemIds);
   }
 
+  function handleFolderClick(folderId: number): void {
+    const folder = folderData[folderId];
+    const folderDataCopy = structuredClone(folderData);
+    const itemDataCopy = structuredClone(itemData);
+    let delta = 0;
+    if (folder.isChecked && folder.checkedItemCount === folder.totalItemCount) {
+      delta = -folder.checkedItemCount;
+      updateFolderAndDownstream(folderId, false, folderDataCopy, itemDataCopy);
+    } else {
+      delta = folder.totalItemCount - folder.checkedItemCount;
+      updateFolderAndDownstream(folderId, true, folderDataCopy, itemDataCopy);
+    }
+
+    updateUpstreamFolders(folder.parentId, delta, folderDataCopy);
+    setItemData(itemDataCopy);
+  }
+
   function updateUpstreamFolders(
     folderId: number | null,
     delta: number,
@@ -81,6 +98,35 @@ export default function ItemSelector() {
     updateUpstreamFolders(folder.parentId, delta, updatedFolderData);
   }
 
+  function updateFolderAndDownstream(
+    folderId: number,
+    shouldCheck: boolean,
+    updatedFolderData: FolderMap,
+    updatedItemData: ItemMap,
+  ): void {
+    const folder = folderData[folderId];
+
+    updatedFolderData[folderId] = {
+      ...folder,
+      checkedItemCount: shouldCheck ? folder.totalItemCount : 0,
+      isChecked: shouldCheck,
+      isIndeterminate: false,
+    };
+
+    folder.childItemIds.forEach((itemId) => {
+      updatedItemData[itemId].isChecked = shouldCheck;
+    });
+
+    folder.childFolderIds.forEach((folderId) => {
+      updateFolderAndDownstream(
+        folderId,
+        shouldCheck,
+        updatedFolderData,
+        updatedItemData,
+      );
+    });
+  }
+
   const folderCheckboxes = topFolders.map((folder) => {
     return (
       <li key={"folder" + folder.id}>
@@ -89,6 +135,7 @@ export default function ItemSelector() {
           folderMap={folderData}
           itemMap={itemData}
           onItemClick={handleItemClick}
+          onFolderClick={handleFolderClick}
         />
       </li>
     );

@@ -7,11 +7,13 @@ export default function FolderCheckbox({
   folderMap,
   itemMap,
   onItemClick,
+  onFolderClick,
 }: {
   folder: Folder;
   folderMap: FolderMap;
   itemMap: ItemMap;
   onItemClick: (id: number) => void;
+  onFolderClick: (id: number) => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -29,6 +31,7 @@ export default function FolderCheckbox({
           folderMap={folderMap}
           itemMap={itemMap}
           onItemClick={onItemClick}
+          onFolderClick={onFolderClick}
         />
       </li>
     );
@@ -50,7 +53,7 @@ export default function FolderCheckbox({
           type="checkbox"
           checked={folder.isChecked}
           ref={inputRef}
-          onClick={() => {}}
+          onChange={() => onFolderClick(folder.id)}
         />
         <label>{folder.title}</label>
       </span>
