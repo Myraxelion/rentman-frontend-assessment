@@ -145,6 +145,18 @@ export default function ItemSelector() {
     });
   }
 
+  function clearSelection(): void {
+    const folderDataCopy = structuredClone(folderData);
+    const itemDataCopy = structuredClone(itemData);
+    topFolders.forEach((folder) => {
+      updateFolderAndDownstream(folder.id, false, folderDataCopy, itemDataCopy);
+    });
+
+    setFolderData(folderDataCopy);
+    setItemData(itemDataCopy);
+    updateSelectedItemIds(null, itemDataCopy);
+  }
+
   const folderCheckboxes = topFolders.map((folder) => {
     return (
       <li key={"folder" + folder.id}>
@@ -163,6 +175,7 @@ export default function ItemSelector() {
     <>
       <ol>{folderCheckboxes}</ol>
       <p>Selected item ids: {Array.from(selectedItemIds).join(", ")}</p>
+      <button onClick={clearSelection}>Clear Selection</button>
     </>
   );
 }
