@@ -41,7 +41,6 @@ export default function ItemSelector() {
   ): void {
     let newSelectedItemIds = new Set<number>();
     if (itemId === null) {
-      // update everything
       Object.values(updatedItemMap).forEach((item) => {
         if (item.isChecked) {
           newSelectedItemIds.add(item.id);
@@ -64,6 +63,7 @@ export default function ItemSelector() {
     const folderDataCopy = structuredClone(folderData);
     const itemDataCopy = structuredClone(itemData);
     let delta = 0;
+
     if (folder.isChecked && folder.checkedItemCount === folder.totalItemCount) {
       delta = -folder.checkedItemCount;
       updateFolderAndDownstream(folderId, false, folderDataCopy, itemDataCopy);

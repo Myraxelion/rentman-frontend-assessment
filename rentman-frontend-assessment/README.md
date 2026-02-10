@@ -1,1 +1,0 @@
-# rentman-frontend-assessment
