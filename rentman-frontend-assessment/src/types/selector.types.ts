@@ -6,6 +6,8 @@ interface Folder {
   childItemIds: number[];
   isChecked: boolean;
   isIndeterminate: boolean;
+  checkedItemCount: number;
+  totalItemCount: number;
 }
 
 interface Item {

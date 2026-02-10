@@ -22,6 +22,11 @@ export default function ItemSelector() {
   }, []);
 
   function handleItemClick(itemId: number): void {
+    const item = itemData[itemId];
+    updateUpstreamFolders(item.folderId, item.isChecked ? -1 : 1, {
+      ...folderData,
+    });
+
     const newItemData = {
       ...itemData,
       [itemId]: { ...itemData[itemId], isChecked: !itemData[itemId].isChecked },
@@ -37,6 +42,45 @@ export default function ItemSelector() {
     setSelectedItemIds(newSelectedItemIds);
   }
 
+  function updateUpstreamFolders(
+    folderId: number | null,
+    delta: number,
+    updatedFolderData: FolderMap,
+  ): void {
+    if (folderId === null) {
+      setFolderData(updatedFolderData);
+      return;
+    }
+    const folder = folderData[folderId];
+    const newCheckedItemCount = folder.checkedItemCount + delta;
+
+    let isChecked = folder.isChecked;
+    let isIndeterminate = folder.isIndeterminate;
+
+    if (newCheckedItemCount === folder.totalItemCount) {
+      isChecked = true;
+      isIndeterminate = false;
+    } else if (newCheckedItemCount === 0) {
+      isChecked = false;
+      isIndeterminate = false;
+    } else {
+      isChecked = false;
+      isIndeterminate = true;
+    }
+
+    updatedFolderData = {
+      ...updatedFolderData,
+      [folderId]: {
+        ...folder,
+        checkedItemCount: newCheckedItemCount,
+        isChecked,
+        isIndeterminate,
+      },
+    };
+
+    updateUpstreamFolders(folder.parentId, delta, updatedFolderData);
+  }
+
   const folderCheckboxes = topFolders.map((folder) => {
     return (
       <li key={"folder" + folder.id}>
@@ -49,10 +93,6 @@ export default function ItemSelector() {
       </li>
     );
   });
-
-  // console.log("itemData", itemData);
-  // console.log("folderData", folderData);
-  // console.log("topFolders", topFolders);
 
   return (
     <>

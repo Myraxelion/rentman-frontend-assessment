@@ -47,6 +47,8 @@ function mapItemSelectorData(data: ResponseData): SelectorData {
       childItemIds: [],
       isChecked: false,
       isIndeterminate: false,
+      checkedItemCount: 0,
+      totalItemCount: 0,
     };
   });
 
@@ -63,6 +65,7 @@ function mapItemSelectorData(data: ResponseData): SelectorData {
     const parentFolder = folders[itemData[2]];
     if (parentFolder) {
       parentFolder.childItemIds.push(itemData[0]);
+      parentFolder.totalItemCount += 1;
     }
   });
 
@@ -73,6 +76,7 @@ function mapItemSelectorData(data: ResponseData): SelectorData {
     const parentFolder = folders[folderData[2]];
     if (parentFolder) {
       parentFolder.childFolderIds.push(folderData[0]);
+      parentFolder.totalItemCount += folders[folderData[0]].totalItemCount;
     }
   });
 
