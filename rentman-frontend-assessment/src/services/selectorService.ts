@@ -38,9 +38,6 @@ function mapItemSelectorData(data: ResponseData): SelectorData {
     stringSort(a[1], b[1]),
   );
 
-  console.log("sortedFoldersData", sortedFoldersData);
-  console.log("sortedItemsData", sortedItemsData);
-
   data.folders.data.forEach((folderData: FolderData) => {
     folders[folderData[0]] = {
       id: folderData[0],

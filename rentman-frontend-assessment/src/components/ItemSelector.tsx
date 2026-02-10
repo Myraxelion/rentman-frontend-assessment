@@ -7,6 +7,9 @@ import { stringSort } from "../utils/sort";
 export default function ItemSelector() {
   const [folderData, setFolderData] = useState<FolderMap>({});
   const [itemData, setItemData] = useState<ItemMap>({});
+  const [selectedItemIds, setSelectedItemIds] = useState<Set<number>>(
+    () => new Set([]),
+  );
   const topFolders: Folder[] = Object.values(folderData)
     .filter((folder) => folder.parentId === null)
     .sort((a, b) => stringSort(a.title, b.title));
@@ -24,6 +27,14 @@ export default function ItemSelector() {
       [itemId]: { ...itemData[itemId], isChecked: !itemData[itemId].isChecked },
     };
     setItemData(newItemData);
+
+    const newSelectedItemIds = new Set(selectedItemIds);
+    if (newSelectedItemIds.has(itemId)) {
+      newSelectedItemIds.delete(itemId);
+    } else {
+      newSelectedItemIds.add(itemId);
+    }
+    setSelectedItemIds(newSelectedItemIds);
   }
 
   const folderCheckboxes = topFolders.map((folder) => {
@@ -46,6 +57,7 @@ export default function ItemSelector() {
   return (
     <>
       <ol>{folderCheckboxes}</ol>
+      <p>Selected item ids: {Array.from(selectedItemIds).join(", ")}</p>
     </>
   );
 }
