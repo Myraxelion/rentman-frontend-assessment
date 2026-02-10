@@ -1,6 +1,9 @@
 import type { Folder, FolderMap, ItemMap } from "../types/selector.types";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import ItemCheckbox from "./ItemCheckbox";
+
+const UP_ARROW = String.fromCharCode(0x2303);
+const DOWN_ARROW = String.fromCharCode(0x2304);
 
 export default function FolderCheckbox({
   folder,
@@ -16,6 +19,7 @@ export default function FolderCheckbox({
   onFolderClick: (id: number) => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isExpanded, setIsExpanded] = useState(true);
   useEffect(() => {
     if (inputRef.current && folder) {
       inputRef.current.indeterminate = folder.isIndeterminate;
@@ -56,9 +60,16 @@ export default function FolderCheckbox({
           onChange={() => onFolderClick(folder.id)}
         />
         <label>{folder.title}</label>
+        <button onClick={() => setIsExpanded(!isExpanded)}>
+          {isExpanded ? UP_ARROW : DOWN_ARROW}
+        </button>
       </span>
-      <ol>{folderCheckboxes}</ol>
-      <ol>{itemCheckboxes}</ol>
+      {isExpanded && (
+        <div>
+          <ol>{folderCheckboxes}</ol>
+          <ol>{itemCheckboxes}</ol>
+        </div>
+      )}
     </>
   );
 }
