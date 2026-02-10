@@ -32,13 +32,30 @@ export default function ItemSelector() {
       [itemId]: { ...itemData[itemId], isChecked: !itemData[itemId].isChecked },
     };
     setItemData(newItemData);
+    updateSelectedItemIds(itemId);
+  }
 
-    const newSelectedItemIds = new Set(selectedItemIds);
-    if (newSelectedItemIds.has(itemId)) {
-      newSelectedItemIds.delete(itemId);
+  function updateSelectedItemIds(
+    itemId: number | null,
+    updatedItemMap: ItemMap = itemData,
+  ): void {
+    let newSelectedItemIds = new Set<number>();
+    if (itemId === null) {
+      // update everything
+      Object.values(updatedItemMap).forEach((item) => {
+        if (item.isChecked) {
+          newSelectedItemIds.add(item.id);
+        }
+      });
     } else {
-      newSelectedItemIds.add(itemId);
+      newSelectedItemIds = new Set(selectedItemIds);
+      if (newSelectedItemIds.has(itemId)) {
+        newSelectedItemIds.delete(itemId);
+      } else {
+        newSelectedItemIds.add(itemId);
+      }
     }
+
     setSelectedItemIds(newSelectedItemIds);
   }
 
@@ -57,6 +74,7 @@ export default function ItemSelector() {
 
     updateUpstreamFolders(folder.parentId, delta, folderDataCopy);
     setItemData(itemDataCopy);
+    updateSelectedItemIds(null, itemDataCopy);
   }
 
   function updateUpstreamFolders(
