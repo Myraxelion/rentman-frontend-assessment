@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { fetchItemSelectorData } from "../services/selectorService";
 import type { ItemMap, FolderMap, Folder } from "../types/selector.types";
 import FolderCheckbox from "./FolderCheckbox";
+import { stringSort } from "../utils/sort";
 
 export default function ItemSelector() {
   const [folderData, setFolderData] = useState<FolderMap>({});
   const [itemData, setItemData] = useState<ItemMap>({});
-  const topFolders: Folder[] = Object.values(folderData).filter(
-    (folder) => folder.parentId === null,
-  );
+  const topFolders: Folder[] = Object.values(folderData)
+    .filter((folder) => folder.parentId === null)
+    .sort((a, b) => stringSort(a.title, b.title));
 
   useEffect(() => {
     fetchItemSelectorData().then((data) => {
