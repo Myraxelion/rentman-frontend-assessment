@@ -1,5 +1,5 @@
 import response from "../data/response.json";
-import type { FolderMap, ItemMap } from "../types/selector.types";
+import type { Folder, FolderMap, ItemMap } from "../types/selector.types";
 import { stringSort } from "../utils/sort";
 
 interface SelectorData {
@@ -30,7 +30,6 @@ export function fetchItemSelectorData(): Promise<SelectorData> {
 function mapItemSelectorData(data: ResponseData): SelectorData {
   const folders: FolderMap = {};
   const items: ItemMap = {};
-
   const sortedFoldersData = data.folders.data.sort(
     (a: FolderData, b: FolderData) => stringSort(a[1], b[1]),
   );
@@ -76,7 +75,11 @@ function mapItemSelectorData(data: ResponseData): SelectorData {
     const parentFolder = folders[folderData[2]];
     if (parentFolder) {
       parentFolder.childFolderIds.push(folderData[0]);
-      parentFolder.totalItemCount += folders[folderData[0]].totalItemCount;
+      updateFolderAndUpstreamItemCounts(
+        parentFolder.id,
+        folders[folderData[0]].totalItemCount,
+        folders,
+      );
     }
   });
 
@@ -84,4 +87,18 @@ function mapItemSelectorData(data: ResponseData): SelectorData {
     folders,
     items,
   };
+}
+
+function updateFolderAndUpstreamItemCounts(
+  folderId: number | null,
+  delta: number,
+  folderMap: FolderMap,
+): void {
+  if (folderId === null) {
+    return;
+  }
+
+  const folder = folderMap[folderId];
+  folder.totalItemCount += delta;
+  updateFolderAndUpstreamItemCounts(folder.parentId, delta, folderMap);
 }
