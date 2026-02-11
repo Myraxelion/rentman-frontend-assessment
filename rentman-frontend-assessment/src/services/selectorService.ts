@@ -1,5 +1,5 @@
 import response from "../data/response.json";
-import type { Folder, FolderMap, ItemMap } from "../types/selector.types";
+import type { FolderMap, ItemMap } from "../types/selector.types";
 import { stringSort } from "../utils/sort";
 
 interface SelectorData {

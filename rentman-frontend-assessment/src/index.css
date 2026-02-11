@@ -9,6 +9,7 @@ ol {
   border-color: hsl(210, 0%, 89%);
   border-width: 1px;
   border-style: solid;
+  border-radius: 3px;
 }
 
 .label,
@@ -52,4 +53,8 @@ input[type="checkbox"] {
 
 .list-item-container:hover {
   background-color: hsl(0, 0%, 96%);
+}
+
+.text-bold {
+  font-weight: bold;
 }

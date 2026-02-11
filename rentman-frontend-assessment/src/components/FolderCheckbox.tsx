@@ -60,7 +60,7 @@ export default function FolderCheckbox({
             ref={inputRef}
             onChange={() => onFolderClick(folder.id)}
           />
-          <label className="label">{folder.title}</label>
+          <label className="label text-bold">{folder.title}</label>
         </span>
         <button
           className="clear-button"
