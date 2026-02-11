@@ -1,5 +1,5 @@
 <h1>README</h1>
-This project is for the Rentman frontend assessment. This is my first time using Vite and it created another folder so I just put everything in that one.
+This project is for the Rentman frontend assessment. I used React. This is my first time using Vite and it created another folder so I just put everything in that one.
 
 <h2>Run Instructions</h2>
 <ol>
